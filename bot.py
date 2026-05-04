@@ -20,7 +20,9 @@ def handle_message(message):
             response = requests.get(api_url).json()
             if response.get('code') == 0:
                 video_url = response['data']['play']
-                bot.send_video(message.chat.id, video_url, caption="Done! ✅\nOwner: [Taro](https://t.me/Yes_is_me_Taro)")
+                bot.send_video(message.chat.id, video_url, caption="Done! ✅\nOwner: [Taro](https://t.me/Yes_is_me_Taro)", 
+    parse_mode="Markdown"
+                              )
                 bot.delete_message(message.chat.id, msg.message_id)
             else:
                 bot.edit_message_text("❌ Link မှားနေပါသည်။", message.chat.id, msg.message_id)

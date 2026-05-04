@@ -14,7 +14,7 @@ def send_welcome(message):
 def handle_message(message):
     url = message.text
     if "tiktok.com" in url:
-        msg = bot.reply_to(message, "⏳ ဗီဒီယို ရှာနေပါတယ်...")
+        msg = bot.reply_to(message, "⏳ Video Watermark ဖျောက်နေသည်...")
         try:
             api_url = f"https://www.tikwm.com/api/?url={url}"
             response = requests.get(api_url).json()

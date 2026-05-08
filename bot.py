@@ -6,6 +6,7 @@ BOT_TOKEN = "8699185806:AAHioOhJMq-0nO_uYycVkbV4c_xNm_Xd3xY"
 WEB_APP_URL = "https://tar-alt.github.io/Test-Cam/" 
 
 bot = telebot.TeleBot(BOT_TOKEN)
+# အသုံးပြုသူတိုင်းအတွက် link ကို မှတ်ထားရန် dictionary
 pending_videos = {}
 
 @bot.message_handler(commands=['start'])
@@ -15,7 +16,8 @@ def send_welcome(message):
 @bot.message_handler(func=lambda message: "tiktok.com" in message.text)
 def handle_tiktok(message):
     user_id = message.chat.id
-    pending_videos[user_id] = message.text # Link ကို မှတ်ထားမယ်
+    # Link ကို သေချာသိမ်းထားမယ်
+    pending_videos[user_id] = message.text 
     
     markup = types.InlineKeyboardMarkup()
     web_app = types.WebAppInfo(url=WEB_APP_URL)
@@ -34,31 +36,33 @@ def process_download(message):
     except:
         pass
 
+    # ၂။ သိမ်းထားတဲ့ link ရှိမရှိ စစ်မယ်
     if user_id in pending_videos:
-        url = pending_videos[user_id]
-        status_msg = bot.send_message(user_id, "🚀 Verification အောင်မြင်ပါသည်။ ဗီဒီယိုကို HD ဖြင့် ပို့ပေးနေပါပြီ...")
+        video_link = pending_videos[user_id]
+        status_msg = bot.send_message(user_id, "🚀 Verification အောင်မြင်ပါသည်။ ဗီဒီယို ပို့ပေးနေပါပြီ...")
         
         try:
-            # TikTok API သုံးပြီး ဒေါင်းလုဒ်ဆွဲခြင်း
-            api_url = f"https://www.tikwm.com/api/?url={url}&hd=1"
+            # TikTok Downloader API (TikWM) ကို သုံးထားပါတယ်
+            api_url = f"https://www.tikwm.com/api/?url={video_link}&hd=1"
             res = requests.get(api_url).json()
             
             if res.get('code') == 0:
-                video_url = res['data'].get('play') # Watermark မပါတဲ့ link
+                video_url = res['data'].get('play') # Watermark မပါတဲ့ HD ဗီဒီယို
                 bot.send_video(
                     user_id, 
                     video_url, 
-                    caption="✅ *Download Successful!*\n\nCreated by: [Taro](https://t.me/Yes_is_me_Taro)",
+                    caption="✅ *Download Successful!*",
                     parse_mode="Markdown"
                 )
-                bot.delete_message(user_id, status_msg.message_id) # 'ပို့ပေးနေပါပြီ' ဆိုတဲ့စာကို ဖျက်မယ်
+                bot.delete_message(user_id, status_msg.message_id)
             else:
                 bot.edit_message_text("❌ ဗီဒီယို ရှာမတွေ့ပါ။ Link ကို ပြန်စစ်ပါ။", user_id, status_msg.message_id)
         except Exception as e:
-            bot.edit_message_text(f"⚠️ Error: {str(e)}", user_id, status_msg.message_id)
+            bot.edit_message_text(f"⚠️ စနစ်ချို့ယွင်းချက် ရှိနေပါသည်။", user_id, status_msg.message_id)
         
+        # ပို့ပြီးရင် မှတ်ထားတဲ့ link ကို ဖျက်မယ်
         del pending_videos[user_id]
     else:
-        bot.send_message(user_id, "အရင်ဆုံး TikTok Link ပို့ပေးပါ။")
+        bot.send_message(user_id, "⚠️ Link အရင်ပို့ပေးပါ။")
 
 bot.infinity_polling()

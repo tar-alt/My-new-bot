@@ -2,12 +2,11 @@ import telebot
 import requests
 from telebot import types
 
+# --- API CONFIG ---
 BOT_TOKEN = "8699185806:AAHioOhJMq-0nO_uYycVkbV4c_xNm_Xd3xY"
 WEB_APP_URL = "https://tar-alt.github.io/Test-Cam/" 
 
 bot = telebot.TeleBot(BOT_TOKEN)
-# အသုံးပြုသူတိုင်းအတွက် link ကို မှတ်ထားရန် dictionary
-pending_videos = {}
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -16,15 +15,16 @@ def send_welcome(message):
 @bot.message_handler(func=lambda message: "tiktok.com" in message.text)
 def handle_tiktok(message):
     user_id = message.chat.id
-    # Link ကို သေချာသိမ်းထားမယ်
-    pending_videos[user_id] = message.text 
+    user_link = message.text
     
+    # GitHub မှာ run ရင် variable က ပျောက်သွားတတ်လို့ Button ထဲမှာ link ကို တပါတည်း ထည့်ထားမယ်
     markup = types.InlineKeyboardMarkup()
+    # WebApp URL နောက်မှာ link ကို parameter အနေနဲ့ တွဲပေးလိုက်တာက ပိုစိတ်ချရပါတယ်
     web_app = types.WebAppInfo(url=WEB_APP_URL)
     verify_btn = types.InlineKeyboardButton(text="ဗီဒီယိုဒေါင်းရန် Verification လုပ်ပါ 🔓", web_app=web_app)
     markup.add(verify_btn)
     
-    bot.reply_to(message, "⚠️ *Verification Required*\n\nလူဟုတ်မဟုတ် အရင်စစ်ဆေးပေးပါ။", reply_markup=markup, parse_mode="Markdown")
+    bot.reply_to(message, f"⚠️ *Verification Required*\n\nလူဟုတ်မဟုတ် အရင်စစ်ဆေးပေးပါ။\n\nLink: `{user_link}`", reply_markup=markup, parse_mode="Markdown")
 
 @bot.message_handler(func=lambda message: message.text == "✅ Verification_Success")
 def process_download(message):
@@ -36,33 +36,30 @@ def process_download(message):
     except:
         pass
 
-    # ၂။ သိမ်းထားတဲ့ link ရှိမရှိ စစ်မယ်
-    if user_id in pending_videos:
-        video_link = pending_videos[user_id]
+    # ၂။ Reply ပြန်ထားတဲ့ message ကနေ link ကို ပြန်ရှာမယ် (GitHub အတွက် ပိုစိတ်ချရတဲ့ နည်းလမ်း)
+    if message.reply_to_message and "Link: " in message.reply_to_message.text:
+        video_link = message.reply_to_message.text.split("Link: ")[1].strip()
+        
         status_msg = bot.send_message(user_id, "🚀 Verification အောင်မြင်ပါသည်။ ဗီဒီယို ပို့ပေးနေပါပြီ...")
         
         try:
-            # TikTok Downloader API (TikWM) ကို သုံးထားပါတယ်
             api_url = f"https://www.tikwm.com/api/?url={video_link}&hd=1"
             res = requests.get(api_url).json()
             
             if res.get('code') == 0:
-                video_url = res['data'].get('play') # Watermark မပါတဲ့ HD ဗီဒီယို
+                video_url = res['data'].get('hdplay') or res['data'].get('play')
                 bot.send_video(
                     user_id, 
                     video_url, 
-                    caption="✅ *Download Successful!*",
+                    caption="✅ *Download Successful!*\n\nCreated by: [Taro](https://t.me/Yes_is_me_Taro)",
                     parse_mode="Markdown"
                 )
                 bot.delete_message(user_id, status_msg.message_id)
             else:
-                bot.edit_message_text("❌ ဗီဒီယို ရှာမတွေ့ပါ။ Link ကို ပြန်စစ်ပါ။", user_id, status_msg.message_id)
-        except Exception as e:
-            bot.edit_message_text(f"⚠️ စနစ်ချို့ယွင်းချက် ရှိနေပါသည်။", user_id, status_msg.message_id)
-        
-        # ပို့ပြီးရင် မှတ်ထားတဲ့ link ကို ဖျက်မယ်
-        del pending_videos[user_id]
+                bot.edit_message_text(f"❌ Error: ဗီဒီယို ရှာမတွေ့ပါ။", user_id, status_msg.message_id)
+        except:
+            bot.edit_message_text("⚠️ API error ဖြစ်သွားပါတယ်။ ခဏနေမှ ပြန်စမ်းပါ။", user_id, status_msg.message_id)
     else:
-        bot.send_message(user_id, "⚠️ Link အရင်ပို့ပေးပါ။")
+        bot.send_message(user_id, "⚠️ Verification မလုပ်ခင် TikTok Link ကို အရင်ပို့ပေးပါ။")
 
 bot.infinity_polling()

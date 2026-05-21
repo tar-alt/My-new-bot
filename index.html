@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Love You 💖</title>
+    <title>စိတ်မဆိုးပါနဲ့တော့နော် 🥺</title>
     <style>
         body {
             display: flex;
@@ -18,95 +18,116 @@
         .container {
             text-align: center;
             background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            max-width: 350px;
-            width: 90%;
+            padding: 35px 25px;
+            border-radius: 25px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+            max-width: 360px;
+            width: 85%;
             position: relative;
         }
         h1 {
             color: #ff4d6d;
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 22px;
+            line-height: 1.5;
+            margin-bottom: 5px;
         }
         p {
             color: #666;
             font-size: 16px;
+            margin-top: 5px;
+        }
+        .gif-container {
+            height: 160px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
         }
         .gif-container img {
             width: 150px;
             height: 150px;
-            margin: 15px 0;
+            object-fit: contain;
         }
         .btn-group {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 25px;
             height: 50px;
             position: relative;
         }
         button {
-            padding: 10px 25px;
+            padding: 12px 28px;
             font-size: 16px;
             border: none;
             border-radius: 25px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
+            z-index: 10;
         }
         #noBtn {
             background-color: #f0f0f0;
-            color: #333;
+            color: #555;
             position: absolute;
+            transition: left 0.1s ease, top 0.1s ease;
+            z-index: 5;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1 id="title">I Love You ❤️</h1>
-        <p id="subtitle">ပြန်ချစ်ပါနော် 🥺</p>
-        
-        <div class="gif-container">
-            <img id="bearGif" src="https://media.tenor.com/X-c696Gz8w8AAAAi/milk-and-mocha-bear.gif" alt="Bears">
+        <div id="page1">
+            <h1 id="title">စိတ်မဆိုးပါနဲ့တော့နော် ကလေးလေးရဲ့... 🥺</h1>
+            <p id="subtitle">အများကြီး အများကြီး ချစ်တယ်လေနော်... ပြန်ချစ်တယ်မလားဟင်? 👉👈</p>
+            
+            <div class="gif-container">
+                <img id="sticker1" src="https://media.tenor.com/Z8vX19_Xw70AAAAi/milk-and-mocha-bear.gif" alt="Please Bear">
+            </div>
+
+            <div class="btn-group">
+                <button id="yesBtn" onclick="goToNextPage()">ချစ်တယ် 💖</button>
+                <button id="noBtn" onmouseover="dodgeButton()" onclick="dodgeButton()">မချစ်ဘူး 😢</button>
+            </div>
         </div>
 
-        <div class="btn-group">
-            <button id="yesBtn" onclick="selectYes()">ချစ်တယ် 💖</button>
-            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">မချစ်ဘူး 😢</button>
+        <div id="page2" style="display: none;">
+            <h1>Yeeyy!!! စိတ်ဆိုးပြေသွားပြီ ဟုတ်လား 😍🎉</h1>
+            <p>အနမ်းကြီးကြီးတစ်ခု ပေးလိုက်ပြီနော် ဖွဖွလေး... မွမွ ခိခိ 💋</p>
+            
+            <div class="gif-container">
+                <img src="https://media.tenor.com/v8tT9T_877MAAAAi/milk-and-mocha-kiss.gif" alt="Kiss Bear">
+            </div>
         </div>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const title = document.getElementById('title');
-        const subtitle = document.getElementById('subtitle');
-        const bearGif = document.getElementById('bearGif');
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
 
-        // မချစ်ဘူး ခလုတ်ကို ထိရင်ဖြစ်ဖြစ်၊ နှိပ်ရင်ဖြစ်ဖြစ် ပတ်ပြေးခိုင်းတဲ့ Code
-        function moveButton() {
-            // ဖုန်း Screen အကျယ်အဝန်းကို တွက်ချက်တာပါ
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 50);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
+        // မချစ်ဘူး ခလုတ်ကို ထိရင်ဖြစ်ဖြစ်၊ နှိပ်ရင်ဖြစ်ဖြစ် တခြားနေရာကို ပတ်ပြေးခိုင်းတဲ့ Code
+        function dodgeButton() {
+            // Screen အကျယ်အဝန်းထဲကနေ ခလုတ်မလွတ်အောင် တွက်ချက်တာပါ
+            const padding = 60;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
             
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
         }
 
-        // ချစ်တယ် ခလုတ်ကို နှိပ်လိုက်ရင် ဖြစ်သွားမယ့် Code
-        function selectYes() {
-            title.innerText = "Yeeyy!!! 🎉💖";
-            subtitle.innerText = "ပြန်ချစ်လို့ ကျေးဇူးတင်ပါတယ်ခင်ဗျာာာ စိတ်ချပါ အမြဲပျော်အောင်ထားပါ့မယ်။";
-            bearGif.src = "https://media.tenor.com/w9K8fO50U7kAAAAi/milk-and-mocha-bear.gif"; // ပျော်သွားတဲ့ပုံပြောင်းတာ
-            noBtn.style.display = 'none'; // မချစ်ဘူးခလုတ်ကို ဖျောက်လိုက်တာ
+        // ချစ်တယ် ခလုတ်ကို နှိပ်လိုက်ရင် ဒုတိယစာမျက်နှာကို ပြောင်းပေးမယ့် Code
+        function goToNextPage() {
+            page1.style.display = 'none'; // ပထမစာမျက်နှာကို ဖျောက်တယ်
+            page2.style.display = 'block'; // ဒုတိယစာမျက်နှာ (ချော့တဲ့စာနဲ့ Sticker အသစ်) ကို ဖော်ပေးတယ်
         }
     </script>
 

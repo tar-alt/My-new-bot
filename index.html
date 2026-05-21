@@ -1,136 +1,241 @@
 <!DOCTYPE html>
 <html lang="my">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>စိတ်မဆိုးပါနဲ့တော့နော် 🥺</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #ffe6eb;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            overflow: hidden;
-        }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 35px 25px;
-            border-radius: 25px;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
-            max-width: 360px;
-            width: 85%;
-            position: relative;
-        }
-        h1 {
-            color: #ff4d6d;
-            font-size: 22px;
-            line-height: 1.5;
-            margin-bottom: 5px;
-        }
-        p {
-            color: #666;
-            font-size: 16px;
-            margin-top: 5px;
-        }
-        .gif-container {
-            height: 160px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 15px 0;
-        }
-        .gif-container img {
-            width: 150px;
-            height: 150px;
-            object-fit: contain;
-        }
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-top: 25px;
-            height: 50px;
-            position: relative;
-        }
-        button {
-            padding: 12px 28px;
-            font-size: 16px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            z-index: 10;
-        }
-        #noBtn {
-            background-color: #f0f0f0;
-            color: #555;
-            position: absolute;
-            transition: left 0.1s ease, top 0.1s ease;
-            z-index: 5;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For You 💖</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body{
+      background: linear-gradient(135deg,#ffd6e7,#ffeef5);
+      overflow:hidden;
+      height:100vh;
+    }
+
+    .page{
+      width:100%;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      position:absolute;
+      top:0;
+      left:0;
+      transition:0.5s;
+    }
+
+    h1{
+      color:#ff3f7f;
+      font-size:34px;
+      text-align:center;
+      margin-bottom:15px;
+      padding:0 20px;
+    }
+
+    p{
+      color:#444;
+      font-size:18px;
+      text-align:center;
+      margin-bottom:20px;
+      padding:0 25px;
+      line-height:1.6;
+    }
+
+    .stickers{
+      font-size:55px;
+      margin-bottom:20px;
+      animation: float 2s infinite ease-in-out;
+    }
+
+    @keyframes float{
+      0%{transform:translateY(0px);}
+      50%{transform:translateY(-10px);}
+      100%{transform:translateY(0px);}
+    }
+
+    .btns{
+      position:relative;
+      width:320px;
+      height:160px;
+    }
+
+    button{
+      border:none;
+      padding:14px 28px;
+      border-radius:40px;
+      font-size:18px;
+      cursor:pointer;
+      transition:0.2s;
+      position:absolute;
+      box-shadow:0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    #yesBtn{
+      background:#ff4f8b;
+      color:white;
+      left:40px;
+      top:60px;
+    }
+
+    #yesBtn:hover{
+      transform:scale(1.08);
+    }
+
+    #noBtn{
+      background:white;
+      color:#ff4f8b;
+      border:2px solid #ff4f8b;
+      right:40px;
+      top:60px;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    .love-page{
+      background: linear-gradient(135deg,#fff0f5,#ffd6eb);
+      text-align:center;
+      padding:20px;
+    }
+
+    .heart{
+      position:absolute;
+      color:#ff5c93;
+      animation: fall linear infinite;
+      top:-20px;
+    }
+
+    @keyframes fall{
+      to{
+        transform:translateY(110vh);
+      }
+    }
+
+    .cute-box{
+      background:white;
+      padding:25px;
+      border-radius:25px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.12);
+      max-width:350px;
+    }
+
+    .cute-box h2{
+      color:#ff4f8b;
+      margin-bottom:15px;
+    }
+
+    .cute-box p{
+      margin-bottom:10px;
+    }
+  </style>
 </head>
+
 <body>
 
-    <div class="container">
-        <div id="page1">
-            <h1 id="title">စိတ်မဆိုးပါနဲ့တော့နော် ကလေးလေးရဲ့... 🥺</h1>
-            <p id="subtitle">အများကြီး အများကြီး ချစ်တယ်လေနော်... ပြန်ချစ်တယ်မလားဟင်? 👉👈</p>
-            
-            <div class="gif-container">
-                <img id="sticker1" src="https://media.tenor.com/Z8vX19_Xw70AAAAi/milk-and-mocha-bear.gif" alt="Please Bear">
-            </div>
+  <!-- PAGE 1 -->
+  <div class="page" id="page1">
 
-            <div class="btn-group">
-                <button id="yesBtn" onclick="goToNextPage()">ချစ်တယ် 💖</button>
-                <button id="noBtn" onmouseover="dodgeButton()" onclick="dodgeButton()">မချစ်ဘူး 😢</button>
-            </div>
-        </div>
+    <div class="stickers">🥺💖🌸🐰</div>
 
-        <div id="page2" style="display: none;">
-            <h1>Yeeyy!!! စိတ်ဆိုးပြေသွားပြီ ဟုတ်လား 😍🎉</h1>
-            <p>အနမ်းကြီးကြီးတစ်ခု ပေးလိုက်ပြီနော် ဖွဖွလေး... မွမွ ခိခိ 💋</p>
-            
-            <div class="gif-container">
-                <img src="https://media.tenor.com/v8tT9T_877MAAAAi/milk-and-mocha-kiss.gif" alt="Kiss Bear">
-            </div>
-        </div>
+    <h1>စိတ်မဆိုးပါနဲ့တော့နော် 🥺</h1>
+
+    <p>
+      အများကြီးချစ်တယ် 💕<br>
+      ပြန်ချစ်တယ်မလား 😔💖
+    </p>
+
+    <div class="btns">
+      <button id="yesBtn">ချစ်တယ် 💖</button>
+      <button id="noBtn">မချစ်ဘူး 😒</button>
     </div>
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const page1 = document.getElementById('page1');
-        const page2 = document.getElementById('page2');
+  </div>
 
-        // မချစ်ဘူး ခလုတ်ကို ထိရင်ဖြစ်ဖြစ်၊ နှိပ်ရင်ဖြစ်ဖြစ် တခြားနေရာကို ပတ်ပြေးခိုင်းတဲ့ Code
-        function dodgeButton() {
-            // Screen အကျယ်အဝန်းထဲကနေ ခလုတ်မလွတ်အောင် တွက်ချက်တာပါ
-            const padding = 60;
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
-            
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-        }
+  <!-- PAGE 2 -->
+  <div class="page love-page hidden" id="page2">
 
-        // ချစ်တယ် ခလုတ်ကို နှိပ်လိုက်ရင် ဒုတိယစာမျက်နှာကို ပြောင်းပေးမယ့် Code
-        function goToNextPage() {
-            page1.style.display = 'none'; // ပထမစာမျက်နှာကို ဖျောက်တယ်
-            page2.style.display = 'block'; // ဒုတိယစာမျက်နှာ (ချော့တဲ့စာနဲ့ Sticker အသစ်) ကို ဖော်ပေးတယ်
-        }
-    </script>
+    <div class="cute-box">
+      <div class="stickers">🐻💗🌸✨</div>
+
+      <h2>Yayyy 💖</h2>
+
+      <p>
+        စိတ်ဆိုးပြေသွားပြီလို့ ယူဆလိုက်ပြီနော် 🥺💕
+      </p>
+
+      <p>
+        မင်းပြုံးနေတာလေးကိုပဲ မြင်ချင်တာ 🌷
+      </p>
+
+      <p>
+        အမြဲချစ်နေမှာပါ 💞
+      </p>
+
+      <div style="font-size:40px;margin-top:10px;">
+        💖🐰💖
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    const page1 = document.getElementById("page1");
+    const page2 = document.getElementById("page2");
+
+    // NO BUTTON MOVE
+    noBtn.addEventListener("mouseover", moveButton);
+    noBtn.addEventListener("click", moveButton);
+
+    function moveButton(){
+      const x = Math.random() * 220;
+      const y = Math.random() * 120;
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // YES BUTTON
+    yesBtn.addEventListener("click", () => {
+      page1.classList.add("hidden");
+      page2.classList.remove("hidden");
+
+      createHearts();
+    });
+
+    // HEART ANIMATION
+    function createHearts(){
+      setInterval(() => {
+
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+
+        heart.innerHTML = "💖";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+
+      }, 250);
+    }
+  </script>
 
 </body>
 </html>
-

